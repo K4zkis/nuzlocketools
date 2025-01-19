@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/nuzlocketools/static/css/main.f855e6bc.css",
-    "main.js": "/nuzlocketools/static/js/main.b1c0cb9c.js",
+    "main.js": "/nuzlocketools/static/js/main.ae90f45b.js",
     "index.html": "/nuzlocketools/index.html",
     "main.f855e6bc.css.map": "/nuzlocketools/static/css/main.f855e6bc.css.map",
-    "main.b1c0cb9c.js.map": "/nuzlocketools/static/js/main.b1c0cb9c.js.map"
+    "main.ae90f45b.js.map": "/nuzlocketools/static/js/main.ae90f45b.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.b1c0cb9c.js"
+    "static/js/main.ae90f45b.js"
   ]
 }
