@@ -1,11 +1,15 @@
 import './App.css';
 import React from 'react';
-import DeadPairs from './components/deadPairs';
+import NavBar from './components/navBar';
+import TeamViewer from './components/teamViewer';
+import Footer from './components/footer';
 
 function App() {
   return (
     <div>
-      <DeadPairs />
+      <NavBar />
+      <TeamViewer />
+      <Footer />
     </div>
   );
 }

@@ -1,22 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const DeadPairs = () => {
-  const [deadPairs, setDeadPairs] = useState({});
-
-  useEffect(() => {
-    fetch('../../public/pairs.json')
-      .then((response) => response.json())
-      .then((data) => {
-        setDeadPairs(data.deadPairs);
-      })
-      .catch((error) => console.error('Error loading pairs.json:', error));
-  }, []);
+const DeadPairs = ({ pairs }) => {
+  const entries = Object.entries(pairs);
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
       <div>
-        <h3>Column 1</h3>
-        {Object.entries(deadPairs).map((pair, index) => (
+        <h3>Dead</h3>
+        {entries.map((pair, index) => (
           index % 2 === 0 && (
             <div key={pair[0]}>
               {pair[0]} - {pair[1]}
@@ -25,8 +16,8 @@ const DeadPairs = () => {
         ))}
       </div>
       <div>
-        <h3>Column 2</h3>
-        {Object.entries(deadPairs).map((pair, index) => (
+        <h3>Pairs</h3>
+        {entries.map((pair, index) => (
           index % 2 !== 0 && (
             <div key={pair[0]}>
               {pair[0]} - {pair[1]}
