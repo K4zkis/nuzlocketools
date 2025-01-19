@@ -1,26 +1,24 @@
 import React from 'react';
 
 const DeadPairs = ({ pairs }) => {
-  const entries = Object.entries(pairs);
-
   return (
     <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem' }}>
       <div>
         <h3>Dead</h3>
-        {entries.map((pair, index) => (
+        {pairs.map((pair, index) => (
           index % 2 === 0 && (
-            <div key={pair[0]}>
-              {pair[0]} - {pair[1]}
+            <div key={index} style={{ display: 'flex', gap: '0.5rem' }}>
+              <span>{pair[0]}</span> - <span>{pair[1]}</span>
             </div>
           )
         ))}
       </div>
       <div>
         <h3>Pairs</h3>
-        {entries.map((pair, index) => (
+        {pairs.map((pair, index) => (
           index % 2 !== 0 && (
-            <div key={pair[0]}>
-              {pair[0]} - {pair[1]}
+            <div key={index} style={{ display: 'flex', gap: '0.5rem' }}>
+              <span>{pair[0]}</span> - <span>{pair[1]}</span>
             </div>
           )
         ))}
@@ -30,3 +28,4 @@ const DeadPairs = ({ pairs }) => {
 };
 
 export default DeadPairs;
+

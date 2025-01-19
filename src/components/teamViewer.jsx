@@ -4,99 +4,86 @@ import TeamPairs from './teamPairs';
 import OpenPairs from './openPairs';
 import DeadPairs from './deadPairs';
 import TypegridSelector from './typegridSelector';
+import '../styles/teamViewer.css'; // Import the CSS file
 
 const TeamViewer = () => {
   const [unclickedIndexes, setUnclickedIndexes] = useState([]);
   const [savedTypes, setSavedTypes] = useState(data.savedtypes);
-  const [openMonsters, setOpenMonsters]= useState([]);
+  const [openMonsters, setOpenMonsters] = useState([]);
+  const [matches, setMatches] = useState([]); // State for displaying matches
 
-  // Memoize the function to avoid unnecessary re-renders
   const handleUnclickedIndexesUpdate = useCallback((updatedIndexes) => {
     setUnclickedIndexes(updatedIndexes);
-  }, []); // This callback won't change unless specified dependencies change
+  }, []);
 
   const handleButtonClick = () => {
     const namesFound = getNamesFromSavedTypes(unclickedIndexes, savedTypes);
-    setOpenMonsters(namesFound);
-    console.log(namesFound); // Log the result to the console
+    setOpenMonsters([...new Set(namesFound)]); // Update state
+    const foundMatches = findOpenPairsMatches([...new Set(namesFound)]); // Find matches
+    setMatches(foundMatches); // Update matches state
   };
 
-  // Function to get names from savedTypes based on unclickedIndexes
   const getNamesFromSavedTypes = (unclickedIndexes, savedTypes) => {
-    const namesFound = [];
+    const namesFound = new Set(); // Use a Set to ensure uniqueness
 
     unclickedIndexes.forEach((index) => {
       Object.keys(savedTypes).forEach((key) => {
         if (savedTypes[key].includes(index)) {
-          namesFound.push(key);
+          namesFound.add(key);
         }
       });
     });
 
-    return namesFound;
+    return Array.from(namesFound); // Convert Set back to an array
   };
 
-  
+  const findOpenPairsMatches = (monsters) => {
+    const matches = new Set(); // Use a Set to ensure unique pairs
+
+    monsters.forEach((monster) => {
+      data.openPairs.forEach((pair) => {
+        if (pair.includes(monster)) {
+          const otherMonster = pair[0] === monster ? pair[1] : pair[0];
+          if (monsters.includes(otherMonster)) {
+            matches.add(JSON.stringify(pair)); // Serialize to avoid duplicate arrays
+          }
+        }
+      });
+    });
+
+    const uniqueMatches = Array.from(matches).map((match) => JSON.parse(match)); // Deserialize pairs
+    return uniqueMatches;
+  };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingTop: '60px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div style={{ flex: 1, paddingRight: '80px' }}>
+    <div className="team-viewer-container">
+      <div className="team-viewer-content">
+        <div className="team-viewer-left">
           <TeamPairs pairs={data.teamPairs} />
           <OpenPairs pairs={data.openPairs} />
           <DeadPairs pairs={data.deadPairs} />
-        {/* Display savedTypes here 
-        <div style={{ marginTop: '20px' }}>
-            <h3>Saved Types:</h3>
-            <pre>{JSON.stringify(savedTypes, null, 2)}</pre>
-        </div>
-        */}
         </div>
         <TypegridSelector 
           array={data.array} 
           onUnclickedIndexesUpdate={handleUnclickedIndexesUpdate} 
         />
         <button 
-            onClick={handleButtonClick}
-                style={{
-                    backgroundColor: '#4CAF50', // Green background
-                    color: 'white', // White text
-                    padding: '10px 20px', // Padding inside the button
-                    position:'relative',
-                    top: '300px',
-                    left: '-200px',
-                    paddingTop: '10px',
-                    border: 'none', // No border
-                    borderRadius: '5px', // Rounded corners
-                    fontSize: '16px', // Font size
-                    cursor: 'pointer', // Pointer cursor on hover
-                    transition: 'background-color 0.3s ease', // Smooth transition for background color
-                }}
-                onMouseOver={(e) => e.target.style.backgroundColor = '#45a049'} // Change color on hover
-                onMouseOut={(e) => e.target.style.backgroundColor = '#4CAF50'} // Revert color when hover ends
-            >
-            Generate Matches
+          onClick={handleButtonClick}
+          className="generate-button"
+        >
+          Generate Matches
         </button>
-        <div>
-            <h3>Matches:</h3>
-                <ul>
-                {openMonsters.map((item, index) => (
-                <li key={index}>{item}</li> // Render each item of the array as a list item
-                ))}
-                </ul>
+        <div className="matches-list">
+          <h3>Matches:</h3>
+          <ul>
+            {matches.map((pair, index) => (
+              <li key={index}>
+                {pair[0]} - {pair[1]}
+              </li>
+            ))}
+          </ul>
         </div>
-        {/* Display unclicked indexes from parent 
-            <div style={{ marginTop: '260px' }}>
-                <h3>Unclicked Indexes (from Parent):</h3>
-                <ul>
-                    {unclickedIndexes.map((index) => (
-                    <li key={index}>{index}</li>
-                    ))}
-                </ul>
-            </div>
-        */}   
-        </div>
-        
+      </div>
     </div>
   );
 };

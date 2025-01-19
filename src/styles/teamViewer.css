@@ -1,0 +1,57 @@
+/* teamViewer.css */
+
+/* Main container */
+.team-viewer-container {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 60px;
+  }
+  
+  .team-viewer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .team-viewer-left {
+    flex: 1;
+    padding-right: 80px;
+  }
+  
+  /* Button styling */
+  .generate-button {
+    background-color: #4caf50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding inside the button */
+    position: relative;
+    top: 300px;
+    left: -200px;
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+  
+  .generate-button:hover {
+    background-color: #45a049; /* Change color on hover */
+  }
+  
+  /* Matches list styling */
+  .matches-list {
+    margin-top: 20px;
+  }
+  
+  .matches-list h3 {
+    font-size: 18px;
+  }
+  
+  .matches-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .matches-list li {
+    margin: 5px 0;
+  }
+  
